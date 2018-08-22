@@ -18,14 +18,39 @@
 
 
 <body>
-    <h1>Welcome To The Quiz Game</h1>  
     
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom ">
-        <ul>
-            <li><a href="{{ url_for('index')}}">Quiz</a></li>
-            <li><a href="{{ url_for('leaderboards')}}">Leadersboards</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index')}}">Quiz</a>
+        <a class="navbar-brand" href="{{ url_for('leaderboards')}}">Leadersboards</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </nav>
+
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">Weclome To The Quiz Game</h1>
+          <h2 class="masthead-subheading mb-0">Press The Button Below To Get Started</h2>
+          <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Start</a>
+        </div>
+      </div>
+     
+    </header>
+    
+    <section>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+            
+          </div>
+        
+        </div>
+      </div>
+    </section>
+    
     
     
 </body>

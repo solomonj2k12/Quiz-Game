@@ -5,28 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <link href="/static/bootstrap/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/startbootstrap-one-page-wonder-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/bootstrap/css/one-page-wonder.min.css" rel="stylesheet">
+    <link href="/static/startbootstrap-one-page-wonder-gh-pages/css/one-page-wonder.min.css" rel="stylesheet">
     <title>Quiz Game</title>
 </head>
 
 
 <body>
-    <h1>Welcome To The Quiz Game Leaderboards</h1>  
     
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom ">
-        <ul>
-            <li><a href="{{ url_for('index')}}">Quiz</a></li>
-            <li><a href="{{ url_for('leaderboards')}}">Leadersboards</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index')}}">Quiz</a>
+        <a class="navbar-brand" href="{{ url_for('leaderboards')}}">Leadersboards</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </nav>
+
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">Weclome To The Quiz Game Leadersboards</h1>
+          <h2 class="masthead-subheading mb-0">Press The Button Below To Take A Look</h2>
+          <a href="#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
+        </div>
+      </div>
+     
+    </header>
     
     
 </body>
-</html>
