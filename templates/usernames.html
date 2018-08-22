@@ -32,23 +32,19 @@
     <header class="masthead text-center text-white">
       <div class="masthead-content">
         <div class="container">
-          <h1 class="masthead-heading mb-0">Weclome To The Riddle Game</h1>
-          <h2 class="masthead-subheading mb-0">Press The Button Below To Get Started</h2>
-          <a href="{{url_for('setup')}}" class="btn btn-primary btn-xl rounded-pill mt-5">Start</a>
+          <h1 class="masthead-heading mb-0">Please Select Your Number Of PLayers</h1>
+          <div class="text-center text-white">
+          <form method="POST">
+            <div class="col-xs-12 col-md-12">
+                {% for i in range(players) %}
+                <input type="text" class="text-input" id="player-{{ i+1 }}-username" name="player-{{ i+1 }}-username" placeholder="Player {{ i+1 }} username ..."> {% endfor %}
+                <button type="submit" class="btn btn-primary">Start Game</button>
+            </div>
+        </form>  
+        </div>
         </div>
       </div>
      
     </header>
-    
-    <section>
-      
-      <div class="container">
-        
-      </div>
-      
-    </section>
-   
-    
-    
     
 </body>

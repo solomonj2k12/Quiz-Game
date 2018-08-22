@@ -32,23 +32,34 @@
     <header class="masthead text-center text-white">
       <div class="masthead-content">
         <div class="container">
-          <h1 class="masthead-heading mb-0">Weclome To The Riddle Game</h1>
-          <h2 class="masthead-subheading mb-0">Press The Button Below To Get Started</h2>
-          <a href="{{url_for('setup')}}" class="btn btn-primary btn-xl rounded-pill mt-5">Start</a>
+          <h1 class="masthead-heading mb-0">Please Select Your Number Of PLayers</h1>
+          <form method="GET">
+        <div>
+
+          <label for="1players" class="col-form-label">Select Number of Players: </label>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="players" id="1Players" value="1" checked>
+            <label class="form-check-label" for="1Players">1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="players" id="2Players" value="2">
+            <label class="form-check-label" for="2Players">2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="players" id="3Players" value="3">
+            <label class="form-check-label" for="3Players">3</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="players" id="4Players" value="4">
+            <label class="form-check-label" for="4Players">4</label>
+          </div>
+          <button type="submit" id="start-game-button" class="btn btn-primary mb-2" value="submit">Continue</button>
+
+        </div>
+      </form>
         </div>
       </div>
      
     </header>
-    
-    <section>
-      
-      <div class="container">
-        
-      </div>
-      
-    </section>
-   
-    
-    
     
 </body>
