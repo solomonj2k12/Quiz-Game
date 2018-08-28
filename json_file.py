@@ -132,3 +132,15 @@ def return_incorrect_guesses(player):
     last_guess_string = " ".join(str(word) for word in last_guess)
     new_text = "{0}<br>{1}".format(incorrect_guesses, last_guess_string)
     return new_text
+    
+    
+def adjust_score_and_lives(correct):
+   
+    previous_player = get_previous_player()
+
+    if correct:
+        previous_player["score"] += 1
+    else:
+        previous_player["lives"] -= 1
+
+    return_player_to_riddle_data(previous_player)
