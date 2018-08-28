@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request
 
-from json_file import create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer
+from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question
 from gameplay import wipe_gamefiles
 
 app = Flask(__name__)
@@ -51,11 +51,21 @@ def riddle():
    get_correct_answer(eliminate_user)
    
    if not all_users_eliminated():
-    set_player_question()
+    player_question()
     ask_question()
     
     riddle_data = get_player_data()
- return render_template('riddle.html')
+    
+   else: 
+
+        start_question()
+        riddle_data[0]["turn"] = True
+        dump_data(riddle_data)
+        player_question()
+        ask_question()
+       
+  return render_template('riddle.html')
+ 
  
  
  

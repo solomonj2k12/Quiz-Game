@@ -1,14 +1,17 @@
 import json
 
+from random import choice
+
+
 from flask import request
 
-from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text
+from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text, question_correct, add_quiz_master_text, add_incorrect_answers_text, quiz_question, set_question_selector, get_picture_question_list, question_check, add_question_text
 
 
 def dump_data(player_list):
   
-    with open("gamefiles/players.json", mode="w", encoding="utf-8") as json_data:
-        json.dump(player_list, json_data)
+    with open("gamefiles/players.json", mode="w", encoding="utf-8") as riddle_data:
+        json.dump(player_list, riddle_data)
         
 def get_player_data():
    
@@ -135,6 +138,7 @@ def get_correct_answer(player):
 
     add_correct_answer_text(correct_answer)
     
+    
 def return_incorrect_guesses(player):
    
     incorrect_guesses = player["incorrect guesses"]
@@ -197,4 +201,102 @@ def all_users_eliminated():
         return False
     else:
         return True
+        
+        
+def start_question():
+    
+    question_list = [{"question": "sample_question"}]
+
+    with open("gamefiles/questions_sheet.json", mode="w", encoding="utf-8") as f:
+        json.dump(question_list, f)
+        
+def player_question():
+   
+    active_user = get_active_user()
+
+    if question_correct(active_user):
+        selector = set_question_selector(active_user["score"])
+        active_user["question"] = random_question_selector(selector)
+
+    return_player_to_riddle_data(active_user)
+    
+    
+def random_question_selector(selector):
+   
+    found_original_question = False
+    questions_list = get_questions_keywords(selector)
+
+    while not found_original_question:
+
+        random_tuple = choice(questions_list)
+
+        if question_check(random_tuple):
+            found_original_question = True
+
+    return random_tuple
+    
+    
+def get_questions_keywords(selector):
+   
+    if selector == "Picture":
+        return get_picture_question_list()
+
+    else:
+        with open("data/{}.txt".format(selector.lower()), "r") as questions_doc:
+            doc_lines = questions_doc.read().splitlines()
+
+        question_list = []
+
+        for i in range(0, len(doc_lines), 4):
+            question_list.append((doc_lines[i], doc_lines[i + 1], doc_lines[i + 2]))
+
+        return question_list
+    
+    
+def get_active_user():
+    
+    active_user = {}
+    riddle_data = get_player_data()
+
+    for player in riddle_data:
+        if player["turn"]:
+            active_user = player
+
+    return active_user
+    
+def ask_question():
+   
+    active_user = get_active_user()
+    riddle_data = get_player_data()
+    number_of_players = len(riddle_data)
+
+    if number_of_players > 1:
+        add_quiz_master_text("Its your go {}".format(active_user["username"]))
+
+    if not question_correct(active_user):
+        add_quiz_master_text("Why not have another go at it...")
+        add_incorrect_answers_text(active_user)
+
+    question = active_user["question"]
+
+    if quiz_question(question):
+        img_text = "<img src ='{}'>".format(question[0])
+        add_question_text(img_text)
+        add_question_text(question[1])
+    else:
+        add_question_text(question[0])
+        
+        
+def get_question_sheet():
+    
+    with open("gamefiles/question_sheet.json", "r") as f:
+        used_questions = json.load(f)
+        return used_questions
+        
+def add_to_questions_sheet(question, used_questions):
+    
+    used_questions.append({"question": question[0]})
+
+    with open("gamefiles/question_sheet.json", mode="w", encoding="utf-8") as f:
+        json.dump(used_questions, f)
 
