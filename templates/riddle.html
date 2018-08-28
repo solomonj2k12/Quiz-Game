@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link href="/static/startbootstrap-one-page-wonder-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/startbootstrap-one-page-wonder-gh-pages/css/one-page-wonder.min.css" rel="stylesheet">
+    <title>Quiz Game</title>
+</head>
+
+
+<body>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{{ url_for('index')}}">Home</a>
+        <a class="navbar-brand" href="{{ url_for('leaderboards')}}">Leadersboards</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    
+    
+    <header>
+    <div class="container-fluid">
+        <div class="row card-row">
+            <div class="col col-{{ col_size }} col-sm-{{ col_sm_size }}">
+                <div class="card" id="player-{{ player.no }}-card">
+                    <h5 class="card-title">{{ player.username}}</h5>
+                    <div class="card-body">
+                        <p class="card-text score-text">Score: {{ player.score }}</p>
+                        <p class="card-text lives-text">Lives: {{ player.lives }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+  <main>
+    <h6>{{ correct_text |safe}} </h6>
+    <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
+    <h4 class="answer">{{ answer_text |safe }} </h4>
+    <h2 class="host">{{ host_text |safe}}</h2>
+    <h1 class="question">{{ question_text |safe}}</h1>
+    <h5 class="guesses">{{ incorrect_guesses_text |safe}}</h5>
+    <form method="POST">
+        <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
+    </form>
+</main>
