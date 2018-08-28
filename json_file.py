@@ -119,7 +119,16 @@ def check_player_answer():
     else:
         add_incorrect_text("Incorrect")
         previous_player["last question correct"] = False
-        previous_player["incorrect guesses"] = append_and_return_incorrect_guesses_string(
+        previous_player["incorrect guesses"] = return_incorrect_guesses(
             previous_player)
         return_player_to_riddle_data(previous_player)
         return False
+        
+def return_incorrect_guesses(player):
+   
+    incorrect_guesses = player["incorrect guesses"]
+    last_guess = player["answer"]
+
+    last_guess_string = " ".join(str(word) for word in last_guess)
+    new_text = "{0}<br>{1}".format(incorrect_guesses, last_guess_string)
+    return new_text
