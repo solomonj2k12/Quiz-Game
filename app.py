@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, request
 
-from json_file import create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user
+from json_file import create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer
 from gameplay import wipe_gamefiles
 
 app = Flask(__name__)

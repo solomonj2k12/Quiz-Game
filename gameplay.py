@@ -25,3 +25,10 @@ def add_eliminated_text(player):
     text_to_write = "{} has been eliminated".format(username)
     with open("gamefiles/eliminated.txt", "a") as f:
         f.writelines(text_to_write)
+        
+def add_correct_answer_text(correct_answer):
+   
+
+    text_to_write = "The correct answer was: {0}<br>".format(correct_answer)
+    with open("gamefiles/answer.txt", "a") as f:
+        f.writelines(text_to_write)

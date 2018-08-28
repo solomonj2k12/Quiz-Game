@@ -2,7 +2,7 @@ import json
 
 from flask import request
 
-from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text
+from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text
 
 
 def dump_data(player_list):
@@ -125,7 +125,15 @@ def check_player_answer():
         return False
         
         
+def get_correct_answer(player):
+   
+    question_tuple = player["question"]
+    if quiz_question(question_tuple):
+        correct_answer = question_tuple[2]
+    else:
+        correct_answer = question_tuple[1]
 
+    add_correct_answer_text(correct_answer)
     
 def return_incorrect_guesses(player):
    
@@ -180,4 +188,13 @@ def add_to_leaderboard(player):
     leaderboard_data.append(saved_score)
 
     post_leaderboard_data(leaderboard_data)
+    
+def all_users_eliminated():
+    
+    riddle_data = get_player_data()
+
+    if len(riddle_data) > 0:
+        return False
+    else:
+        return True
 
