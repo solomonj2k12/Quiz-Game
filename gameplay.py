@@ -1,8 +1,17 @@
 def wipe_gamefiles(game_over=False):
   
-    f = open("active-game-files/correct.txt", "r+")
+    f = open("gamefiles/correct.txt", "r+")
     f.truncate()
     f.close()
+    
+    f = open("gamefiles/eliminated.txt", "r+")
+    f.truncate()
+    f.close()
+    
+    if not game_over:
+        f = open("gamefiles/answer.txt", "r+")
+        f.truncate()
+        f.close()
 
 
 
