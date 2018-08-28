@@ -2,7 +2,7 @@ import json
 
 from flask import request
 
-from gameplay import add_correct_text, add_incorrect_text
+from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text
 
 
 def dump_data(player_list):
@@ -105,7 +105,7 @@ def check_player_answer():
 
     question = previous_player["question"]
 
-    if question_is_picture_question(question):
+    if quiz_question(question):
         keyword = question[3]
     else:
         keyword = question[2]
@@ -124,6 +124,9 @@ def check_player_answer():
         return_player_to_riddle_data(previous_player)
         return False
         
+        
+
+    
 def return_incorrect_guesses(player):
    
     incorrect_guesses = player["incorrect guesses"]
@@ -144,3 +147,37 @@ def adjust_score_and_lives(correct):
         previous_player["lives"] -= 1
 
     return_player_to_riddle_data(previous_player)
+    
+    
+def eliminate_zero_lives_user():
+   
+    riddle_data = get_player_data()
+    player_index = 999
+    eliminated_user = False
+
+    for player in riddle_data:
+        if player["lives"] <= 0:
+            add_to_leaderboard(player)
+            player_index = riddle_data.index(player)
+            add_eliminated_text(player)
+            eliminated_user = player
+            
+
+    if player_index != 999:
+        riddle_data.pop(player_index)
+        dump_data(riddle_data)
+
+    dump_data(riddle_data)
+    return eliminated_user
+    
+def add_to_leaderboard(player):
+   
+    username = player["username"]
+    score = player["score"]
+
+    saved_score = {"username": username, "score": score}
+    leaderboard_data = get_leaderboard_data()
+    leaderboard_data.append(saved_score)
+
+    post_leaderboard_data(leaderboard_data)
+
