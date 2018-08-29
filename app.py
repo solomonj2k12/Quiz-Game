@@ -1,10 +1,12 @@
 import os
 from flask import Flask, render_template, redirect, request
 
-from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question
-from gameplay import wipe_gamefiles
+from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question, all_players_eliminated
+from gameplay import wipe_gamefiles,  game_end_text, get_end_text
 
 app = Flask(__name__)
+
+
 
 
 @app.route('/')
@@ -32,6 +34,10 @@ def usernames(players):
   create_riddle_data(players)
   return redirect('/riddle')
  return render_template('usernames.html', players=players)
+ 
+@app.route('/leaderboards')
+def leaderboards():
+ return render_template('leaderboards.html')
  
  
  
@@ -64,19 +70,32 @@ def riddle():
         player_question()
         ask_question()
        
-  return render_template('riddle.html')
+if all_players_eliminated():
+        wipe_gamefiles(True)
+        game_end_text()
+        leaderboard_data = get_sorted_scores()
+        end_text = get_end_text()
+        return render_template("leaderboard.html", leaderboard_data=leaderboard_data,
+                               answer_text="".join(end_text["answer text"]),
+                               game_end_text="".join(end_text["game over text"]))
  
- 
- 
- 
-@app.route('/leaderboards')
-def leaderboards():
- return render_template('leaderboards.html')
-    
+
+end_text = get_end_text()
+riddle_data = get_player_data()
+
+return render_template("riddle.html", correct_text="".join(end_text["correct text"]),
+                           eliminated_text="".join(end_text["eliminated text"]),
+                           answer_text="".join(end_text["answer text"]), quizmaster_text="".join(end_text["quizmaster text"]),
+                           question_text="".join(end_text["question text"]),
+                           incorrect_answers_text="".join(end_text["incorrect answers text"]),
+                           
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=int(os.environ.get('PORT')),
             debug=True)
+
+                           
+                           
 
 
 

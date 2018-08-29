@@ -138,10 +138,10 @@ def get_picture_question_list():
     
 def question_check(question_tuple):
    
-    used_questions = get_question_sheet()
+    questions_sheet = get_question_sheet()
     original_question = True
 
-    for question in used_questions:
+    for question in questions_sheet:
         if question["question"] == question_tuple[0]:
             original_question = False
 
@@ -149,7 +149,7 @@ def question_check(question_tuple):
         return False
 
     else:
-        add_to_questions_sheet(question_tuple, used_questions)
+        add_to_questions_sheet(question_tuple, questions_sheet)
         return True
         
         
@@ -158,4 +158,45 @@ def add_question_text(question):
     with open("gamefiles/question.txt", "a") as f:
         f.writelines("{}<br>".format(question))
         
+        
+def game_end_text():
+  
+    with open("gamefiles/gameEnd.txt", "a") as f:
+        f.writelines("Game Over Thanks for playing")
+        
+        
+def get_end_text():
+   
+    end_text_dictionary = {}
+
+    with open("gamefiles/correct.txt", "r") as f:
+        correct_text = f.readlines()
+        end_text_dictionary["correct text"] = correct_text
+
+    with open("gamefiles/eliminated.txt", "r") as f:
+        eliminated_text = f.readlines()
+        end_text_dictionary["eliminated text"] = eliminated_text
+
+    with open("gamefiles/answer.txt", "r") as f:
+        answer_text = f.readlines()
+        end_text_dictionary["answer text"] = answer_text
+
+    with open("gamefiles/quizmaster.txt", "r") as f:
+        host_text = f.readlines(
+        end_text_dictionary["quizmaster text"] = quizmaster_text
+
+    with open("gamefiles/question.txt", "r") as f:
+        question_text = f.readlines()
+        end_text_dictionary["question text"] = question_text
+
+    with open("gamefiles/incorrect_answers.txt", "r") as f:
+        incorrect_answers_text = f.readlines()
+        end_text_dictionary["incorrect answers text"] = incorrect_answers_text
+
+    with open("gamefiles/gameEnd.txt", "r") as f:
+        game_end_text = f.readlines()
+        end_text_dictionary["game over text"] = game_end_text
+
+    return end_text_dictionary
+
     

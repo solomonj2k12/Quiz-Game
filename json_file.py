@@ -290,13 +290,21 @@ def ask_question():
 def get_question_sheet():
     
     with open("gamefiles/question_sheet.json", "r") as f:
-        used_questions = json.load(f)
-        return used_questions
+        questions_sheet = json.load(f)
+        return questions_sheet
         
-def add_to_questions_sheet(question, used_questions):
-    
-    used_questions.append({"question": question[0]})
+def add_to_questions_sheet(question, questions_sheet):
+    questions_sheet.append({"question": question[0]})
 
     with open("gamefiles/question_sheet.json", mode="w", encoding="utf-8") as f:
-        json.dump(used_questions, f)
+        json.dump(questions_sheet, f)
+        
+        
+def all_players_eliminated():
+   
+    riddle_data = get_player_data()
 
+    if len(riddle_data) > 0:
+        return False
+    else:
+        return True
