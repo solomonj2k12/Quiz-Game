@@ -1,20 +1,39 @@
 from random import choice
 
-from json_file import get_question_sheet, add_to_questions_sheet
+import json_file
 
-
-def wipe_gamefiles(game_over=False):
+def wipe_gamefiles(game_end=False):
   
-    f = open("gamefiles/correct.txt", "r+")
-    f.truncate()
-    f.close()
-    
-    f = open("gamefiles/eliminated.txt", "r+")
-    f.truncate()
-    f.close()
-    
-    if not game_over:
-        f = open("gamefiles/answer.txt", "r+")
+        f = open("gamefiles/gameEnd.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/eliminated.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/correct.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/incorrect_answers.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/quizmaster.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        if not game_end:
+            f = open("gamefiles/answer.txt", "r+")  
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/question.txt", "r+")
+        f.truncate()
+        f.close()
+        
+        f = open("gamefiles/question.txt", "r+")
         f.truncate()
         f.close()
 
@@ -90,19 +109,7 @@ def set_question_selector(current_score):
         return "Easy"
         
         
-def random_question_selector(selector):
-   
-    found_original_question = False
-    questions_list = get_questions_answers_keywords(selector)
 
-    while not found_original_question:
-
-        random_question = choice(questions_list)
-
-        if question_check(random_question):
-            found_original_question = True
-
-    return random_question
     
     
 def get_questions_answers_keywords(selector):
@@ -135,22 +142,6 @@ def get_picture_question_list():
 
     return pictures_question_list
     
-    
-def question_check(question_tuple):
-   
-    questions_sheet = get_question_sheet()
-    original_question = True
-
-    for question in questions_sheet:
-        if question["question"] == question_tuple[0]:
-            original_question = False
-
-    if not original_question:
-        return False
-
-    else:
-        add_to_questions_sheet(question_tuple, questions_sheet)
-        return True
         
         
 def add_question_text(question):
@@ -182,9 +173,9 @@ def get_end_text():
         end_text_dictionary["answer text"] = answer_text
 
     with open("gamefiles/quizmaster.txt", "r") as f:
-        host_text = f.readlines(
+        quizmaster_text = f.readlines()
         end_text_dictionary["quizmaster text"] = quizmaster_text
-
+    
     with open("gamefiles/question.txt", "r") as f:
         question_text = f.readlines()
         end_text_dictionary["question text"] = question_text
@@ -199,4 +190,5 @@ def get_end_text():
 
     return end_text_dictionary
 
+    
     

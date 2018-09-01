@@ -5,16 +5,16 @@ from random import choice
 
 from flask import request
 
-from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text, question_correct, add_quiz_master_text, add_incorrect_answers_text, quiz_question, set_question_selector, get_picture_question_list, question_check, add_question_text
+from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text, question_correct, add_quiz_master_text, add_incorrect_answers_text, quiz_question, set_question_selector, get_picture_question_list, add_question_text, get_questions_answers_keywords
 
 
 def dump_data(player_list):
-  
+    
     with open("gamefiles/players.json", mode="w", encoding="utf-8") as riddle_data:
         json.dump(player_list, riddle_data)
         
 def get_player_data():
-   
+    
     with open("gamefiles/players.json", "r") as json_file:
         json_data = json.load(json_file)
         return json_data
@@ -22,7 +22,7 @@ def get_player_data():
 
 
 def create_riddle_data(number_of_players):
-   
+    
     player_list = []
     for i in range(number_of_players):
         username = request.form["player-{0}-username".format(i + 1)]
@@ -67,7 +67,7 @@ def set_player_turn():
     dump_data(riddle_data)
     
 def set_previous_answer():
-  
+    
     user_answer = request.form["answer"]
     lower_user_answer = user_answer.lower()
     user_answer_list = lower_user_answer.split()
@@ -191,9 +191,29 @@ def add_to_leaderboard(player):
     leaderboard_data = get_leaderboard_data()
     leaderboard_data.append(saved_score)
 
-    post_leaderboard_data(leaderboard_data)
+    send_leaderboard_data(leaderboard_data)
+    
+def send_leaderboard_data(leaderboard_data):
+   
+    with open("data/leaderboardData.json", mode="w", encoding="utf-8") as f:
+        json.dump(leaderboard_data, f)
+        
+def get_scores():
+    
+    leaderboard_data = get_leaderboard_data()
+    score_data = sorted(leaderboard_data, reverse=True,
+                         key=lambda k: k["score"])
+    return score_data
+    
+    
+def get_leaderboard_data():
+   
+    with open("data/leaderboardData.json", "r") as f:
+        leaderboard_data = json.load(f)
+        return leaderboard_data
     
 def all_users_eliminated():
+    
     
     riddle_data = get_player_data()
 
@@ -224,16 +244,19 @@ def player_question():
 def random_question_selector(selector):
    
     found_original_question = False
-    questions_list = get_questions_keywords(selector)
+    questions_list = get_questions_answers_keywords(selector)
 
     while not found_original_question:
 
-        random_tuple = choice(questions_list)
+        random_question = choice(questions_list)
 
-        if question_check(random_tuple):
+        if question_check(random_question):
             found_original_question = True
 
-    return random_tuple
+    return random_question
+    
+
+
     
     
 def get_questions_keywords(selector):
@@ -292,6 +315,23 @@ def get_question_sheet():
     with open("gamefiles/question_sheet.json", "r") as f:
         questions_sheet = json.load(f)
         return questions_sheet
+        
+        
+def question_check(question_tuple):
+   
+    questions_sheet = get_question_sheet()
+    original_question = True
+
+    for question in questions_sheet:
+        if question["question"] == question_tuple[0]:
+            original_question = False
+
+    if not original_question:
+        return False
+
+    else:
+        add_to_questions_sheet(question_tuple, questions_sheet)
+        return True
         
 def add_to_questions_sheet(question, questions_sheet):
     questions_sheet.append({"question": question[0]})
