@@ -30,31 +30,29 @@
     </nav>
     
     
-    <header>
+    <main>
     <div class="container-fluid">
         <div class="row card-row">
-            <div class="col col-{{ col_size }} col-sm-{{ col_sm_size }}">
-                <div class="card" id="player-{{ player.no }}-card">
-                    <h5 class="card-title">{{ player.username}}</h5>
-                    <div class="card-body">
-                        <p class="card-text score-text">Score: {{ player.score }}</p>
-                        <p class="card-text lives-text">Lives: {{ player.lives }}</p>
-                    </div>
+           <div class="card" id="player-{{ player.no }}-card">
+                <h5 class="card-title">{{ player.username}}</h5>
+                <div class="card-body">
+                    <p class="card-text score-text">Score: {{ player.score }}</p>
+                    <p class="card-text lives-text">Lives: {{ player.lives }}</p>
                 </div>
             </div>
         </div>
     </div>
-</header>
+  </main>
 
 
-  <main>
+  <footer>
     <h6>{{ correct_text |safe}} </h6>
     <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
     <h4 class="answer">{{ answer_text |safe }} </h4>
-    <h2 class="host">{{ host_text |safe}}</h2>
+    <h2 class="quizmaster">{{ quizmaster_text |safe}}</h2>
     <h1 class="question">{{ question_text |safe}}</h1>
-    <h5 class="guesses">{{ incorrect_guesses_text |safe}}</h5>
+    <h5 class="answers">{{ incorrect_answers_text |safe}}</h5>
     <form method="POST">
         <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
     </form>
-</main>
+  </footer>

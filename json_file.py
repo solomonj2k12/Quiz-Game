@@ -5,7 +5,6 @@ from random import choice
 
 from flask import request
 
-from gameplay import add_correct_text, add_incorrect_text, add_eliminated_text,  add_correct_answer_text, question_correct, add_quiz_master_text, add_incorrect_answers_text, quiz_question, set_question_selector, get_picture_question_list, add_question_text, get_questions_answers_keywords
 
 
 def dump_data(player_list):
@@ -127,6 +126,56 @@ def check_player_answer():
         return_player_to_riddle_data(previous_player)
         return False
         
+
+def add_correct_text(text):
+   
+    with open("gamefiles/correct.txt", "a") as f:
+        f.writelines("<span class='correct'>{}</span>".format(text))
+        
+def add_incorrect_text(text):
+   
+    with open("gamefiles/correct.txt", "a") as f:
+        f.writelines("<span class='incorrect'>{}</span>".format(text))
+        
+
+def add_eliminated_text(player):
+   
+    username = player["username"]
+    text_to_write = "{} has been eliminated".format(username)
+    with open("gamefiles/eliminated.txt", "a") as f:
+        f.writelines(text_to_write)
+        
+def add_correct_answer_text(correct_answer):
+   
+
+    text_to_write = "The correct answer was: {0}<br>".format(correct_answer)
+    with open("gamefiles/answer.txt", "a") as f:
+        f.writelines(text_to_write)
+        
+        
+def question_correct(player):
+   
+    if player["last question correct"]:
+        return True
+
+    else:
+        return False    
+        
+        
+def add_quiz_master_text(text):
+    
+    with open("gamefiles/quizmaster.txt", "a") as f:
+        f.writelines("{}<br>".format(text))   
+        
+        
+def add_incorrect_answers_text(player):
+   
+    if len(player["incorrect answers"]) > 0:
+        text_to_write = "<span id='guesses-title'>Incorrect answers: </span> <span class='guesses'> {0} </span>".format(
+            player["incorrect answers"])
+        with open("gamefiles/incorrect_answers.txt", "a") as f:
+            f.writelines(text_to_write)
+        
         
 def get_correct_answer(player):
    
@@ -147,6 +196,25 @@ def return_incorrect_guesses(player):
     last_guess_string = " ".join(str(word) for word in last_guess)
     new_text = "{0}<br>{1}".format(incorrect_guesses, last_guess_string)
     return new_text
+    
+    
+def quiz_question(question):
+   
+    if len(question) == 4:
+        return True
+    else:
+        return False
+        
+def set_question_selector(current_score):
+    
+    if current_score >= 10:
+        return "Hard"
+    elif current_score >= 5:
+        return "Picture"
+    elif current_score >= 5:
+        return "Normal"
+    else:
+        return "Easy"
     
     
 def adjust_score_and_lives(correct):
@@ -338,6 +406,43 @@ def add_to_questions_sheet(question, questions_sheet):
 
     with open("gamefiles/question_sheet.json", mode="w", encoding="utf-8") as f:
         json.dump(questions_sheet, f)
+        
+def get_questions_answers_keywords(selector):
+   
+    if selector == "Picture":
+        return get_picture_question_list()
+
+    else:
+        with open("data/{}.txt".format(selector.lower()), "r") as questions_doc:
+            doc_lines = questions_doc.read().splitlines()
+
+        question_list = []
+
+        for i in range(0, len(doc_lines), 4):
+            question_list.append((doc_lines[i], doc_lines[i + 1], doc_lines[i + 2]))
+
+        return question_list
+        
+    
+def get_picture_question_list():
+   
+    with open("data/pictures.txt") as pictures_doc:
+        pictures_lines = pictures_doc.read().splitlines()
+
+    pictures_question_list = []
+
+    for i in range(0, len(pictures_lines), 5):
+        pictures_question_list.append(("/static/img/{}".format(
+            pictures_lines[i]), pictures_lines[i + 1], pictures_lines[i + 2], pictures_lines[i + 3]))
+
+    return pictures_question_list
+    
+        
+        
+def add_question_text(question):
+    
+    with open("gamefiles/question.txt", "a") as f:
+        f.writelines("{}<br>".format(question))
         
         
 def all_players_eliminated():
