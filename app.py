@@ -6,6 +6,8 @@ from gameplay import wipe_gamefiles,  game_end_text, get_end_text
 
 app = Flask(__name__)
 
+app.secret_key = 'some_secret'
+
 
 @app.route('/')
 def index():
@@ -63,15 +65,12 @@ def riddle():
         player_question()
         ask_question()
         
-        riddle_data = get_player_data()
         
     if all_players_eliminated():
         wipe_gamefiles(True)
         game_end_text()
         leaderboard_data = get_scores()
         end_text = get_end_text()
-        
-        
         return render_template("leaderboard.html", leaderboard_data=leaderboard_data,
         answer_text="".join(end_text["answer text"]),
         game_end_text="".join(end_text["game over text"]))

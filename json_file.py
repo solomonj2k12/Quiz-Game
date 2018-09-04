@@ -380,7 +380,7 @@ def ask_question():
         
 def get_question_sheet():
     
-    with open("gamefiles/question_sheet.json", "r") as f:
+    with open("gamefiles/questions_sheet.json", "r") as f:
         questions_sheet = json.load(f)
         return questions_sheet
         
@@ -404,7 +404,7 @@ def question_check(question_tuple):
 def add_to_questions_sheet(question, questions_sheet):
     questions_sheet.append({"question": question[0]})
 
-    with open("gamefiles/question_sheet.json", mode="w", encoding="utf-8") as f:
+    with open("gamefiles/questions_sheet.json", mode="w", encoding="utf-8") as f:
         json.dump(questions_sheet, f)
         
 def get_questions_answers_keywords(selector):
