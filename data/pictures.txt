@@ -20,5 +20,5 @@ monster
 
 newzealand.png
 what country has this as their flag?
-New Zealand
-new zealand
+NewZealand
+newzealand

@@ -15,10 +15,6 @@ def wipe_gamefiles(game_end=False):
         f.truncate()
         f.close()
         
-        f = open("gamefiles/incorrect_answers.txt", "r+")
-        f.truncate()
-        f.close()
-        
         f = open("gamefiles/quizmaster.txt", "r+")
         f.truncate()
         f.close()
@@ -66,10 +62,6 @@ def get_end_text():
     with open("gamefiles/question.txt", "r") as f:
         question_text = f.readlines()
         end_text_dictionary["question text"] = question_text
-
-    with open("gamefiles/incorrect_answers.txt", "r") as f:
-        incorrect_answers_text = f.readlines()
-        end_text_dictionary["incorrect answers text"] = incorrect_answers_text
 
     with open("gamefiles/gameEnd.txt", "r") as f:
         game_end_text = f.readlines()

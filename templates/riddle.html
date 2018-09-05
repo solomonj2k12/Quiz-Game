@@ -19,20 +19,26 @@
 
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="{{ url_for('index')}}">Home</a>
-        <a class="navbar-brand" href="{{ url_for('leaderboards')}}">Leadersboards</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-    </nav>
+    
     
     
     <main>
-    <div class="container-fluid">
+    <h6>{{ correct_text |safe}} </h6>
+    <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
+    <h4 class="answer">{{ answer_text |safe }} </h4>
+    <h2 class="quizmaster">{{ quizmaster_text |safe}}</h2>
+    <h1 class="question">{{ question_text |safe}}</h1>
+    <form method="POST">
+        <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
+    </form>
+    
+  </main>
+
+
+  <footer>
+     <div class="container-fluid">
         <div class="row card-row">
+            {% for player in riddle_data %}
            <div class="card" id="player-{{ player.no }}-card">
                 <h5 class="card-title">{{ player.username}}</h5>
                 <div class="card-body">
@@ -40,19 +46,7 @@
                     <p class="card-text lives-text">Lives: {{ player.lives }}</p>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-  </main>
-
-
-  <footer>
-    <h6>{{ correct_text |safe}} </h6>
-    <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
-    <h4 class="answer">{{ answer_text |safe }} </h4>
-    <h2 class="quizmaster">{{ quizmaster_text |safe}}</h2>
-    <h1 class="question">{{ question_text |safe}}</h1>
-    <h5 class="answers">{{ incorrect_answers_text |safe}}</h5>
-    <form method="POST">
-        <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
-    </form>
   </footer>

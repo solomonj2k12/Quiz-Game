@@ -50,14 +50,16 @@ def riddle():
         set_previous_answer()
         correct_check = check_player_answer()
         adjust_score_and_lives(correct_check)
-        eliminate_user = eliminate_zero_lives_user
-        
-        if eliminate_user:
-            get_correct_answer(eliminate_user)
+        eliminate_zero_lives_user()
+       
+        if eliminate_zero_lives_user:
+           
    
-        if not all_users_eliminated():
-            player_question()
-            ask_question()
+            if not all_users_eliminated():
+                player_question()
+                ask_question()
+            
+        riddle_data = get_player_data()
     else:
         start_question()
         riddle_data[0]["turn"] = True
@@ -83,7 +85,6 @@ def riddle():
     eliminated_text="".join(end_text["eliminated text"]),
     answer_text="".join(end_text["answer text"]), quizmaster_text="".join(end_text["quizmaster text"]),
     question_text="".join(end_text["question text"]),
-    incorrect_answers_text="".join(end_text["incorrect answers text"]), 
     riddle_data=riddle_data)
     
 if __name__ == '__main__':

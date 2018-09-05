@@ -40,5 +40,31 @@
      
     </header>
     
+    <main>
+    <h1 class="leaderboard-title">Leaderboard</h1>
+    <a class="btn btn-primary" id="return-to-game-btn" href="/" role="button">Play New Game</a>
+    <h4 class="eliminated"> {{ game_end_text |safe }}</h4>
+    <h4 class="answer">{{ answer_text |safe }} </h4>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Rank</th>
+                <th scope="col">Username</th>
+                <th scope="col">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(30) %}
+            <tr>
+                <th scope="row">{{ i+1 }}</th>
+                <td>{{ leaderboard_data[i]["username"] }}</td>
+                <td>{{ leaderboard_data[i]["score"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+    
     
 </body>

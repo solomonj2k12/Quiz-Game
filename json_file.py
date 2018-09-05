@@ -5,6 +5,8 @@ from random import choice
 
 from flask import request
 
+from gametext import add_eliminated_text
+
 
 
 def dump_data(player_list):
@@ -138,12 +140,7 @@ def add_incorrect_text(text):
         f.writelines("<span class='incorrect'>{}</span>".format(text))
         
 
-def add_eliminated_text(player):
-   
-    username = player["username"]
-    text_to_write = "{} has been eliminated".format(username)
-    with open("gamefiles/eliminated.txt", "a") as f:
-        f.writelines(text_to_write)
+
         
 def add_correct_answer_text(correct_answer):
    
@@ -166,15 +163,6 @@ def add_quiz_master_text(text):
     
     with open("gamefiles/quizmaster.txt", "a") as f:
         f.writelines("{}<br>".format(text))   
-        
-        
-def add_incorrect_answers_text(player):
-   
-    if len(player["incorrect answers"]) > 0:
-        text_to_write = "<span id='guesses-title'>Incorrect answers: </span> <span class='guesses'> {0} </span>".format(
-            player["incorrect answers"])
-        with open("gamefiles/incorrect_answers.txt", "a") as f:
-            f.writelines(text_to_write)
         
         
 def get_correct_answer(player):
@@ -207,12 +195,12 @@ def quiz_question(question):
         
 def set_question_selector(current_score):
     
-    if current_score >= 10:
+    if current_score >= 12:
         return "Hard"
+    elif current_score >= 7:
+        return "Normal"
     elif current_score >= 5:
         return "Picture"
-    elif current_score >= 5:
-        return "Normal"
     else:
         return "Easy"
     
@@ -237,7 +225,6 @@ def eliminate_zero_lives_user():
 
     for player in riddle_data:
         if player["lives"] <= 0:
-            add_to_leaderboard(player)
             player_index = riddle_data.index(player)
             add_eliminated_text(player)
             eliminated_user = player
@@ -366,8 +353,7 @@ def ask_question():
 
     if not question_correct(active_user):
         add_quiz_master_text("Why not have another go at it...")
-        add_incorrect_answers_text(active_user)
-
+  
     question = active_user["question"]
 
     if quiz_question(question):
@@ -449,7 +435,7 @@ def all_players_eliminated():
    
     riddle_data = get_player_data()
 
-    if len(riddle_data) > 0:
+    if len(riddle_data) >= 0:
         return False
     else:
         return True
