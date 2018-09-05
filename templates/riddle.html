@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
+    
+    <link rel="stylesheet" href="/static/styles.css" type="text/css" />
     <link href="/static/startbootstrap-one-page-wonder-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom fonts for this template -->
@@ -21,32 +23,39 @@
     
     
     
-    
-    <main>
-    <h6>{{ correct_text |safe}} </h6>
-    <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
-    <h4 class="answer">{{ answer_text |safe }} </h4>
-    <h2 class="quizmaster">{{ quizmaster_text |safe}}</h2>
-    <h1 class="question">{{ question_text |safe}}</h1>
-    <form method="POST">
-        <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
-    </form>
-    
-  </main>
-
-
-  <footer>
-     <div class="container-fluid">
-        <div class="row card-row">
-            {% for player in riddle_data %}
-           <div class="card" id="player-{{ player.no }}-card">
-                <h5 class="card-title">{{ player.username}}</h5>
-                <div class="card-body">
-                    <p class="card-text score-text">Score: {{ player.score }}</p>
-                    <p class="card-text lives-text">Lives: {{ player.lives }}</p>
-                </div>
-            </div>
-            {% endfor %}
+     <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+            <h6>{{ correct_text |safe}} </h6>
+            <h4 class="eliminated">{{ eliminated_text |safe}} </h4>
+            <h4 class="answer">{{ answer_text |safe }} </h4>
+            <h2 class="quizmaster">{{ quizmaster_text |safe}}</h2>
+            <h1 class="question">{{ question_text |safe}}</h1>  
+            <form method="POST">
+                <input type="text" class="text-input" id="answer" name="answer" placeholder="Your answer...">
+            </form>
         </div>
-    </div>
-  </footer>
+      </div>
+      
+      <main class="masthead text-center text-white">
+          <div class="masthead-content">
+            <div class="container">
+                <div class="container-fluid">
+                    <div class="row card-row">
+                    {% for player in riddle_data %}
+                       <div class="card" id="player-{{ player.no }}-card">
+                            <h5 class="card-title">{{ player.username}}</h5>
+                            <div class="card-body">
+                                <p class="card-text score-text">Score: {{ player.score }}</p>
+                                <p class="card-text lives-text">Lives: {{ player.lives }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>    
+            </div>
+          </div>
+     </main>
+    
+
+ 
