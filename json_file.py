@@ -5,7 +5,7 @@ from random import choice
 
 from flask import request
 
-from gametext import add_eliminated_text
+from gametext import add_eliminated_text, add_correct_text, add_incorrect_text, add_correct_answer_text, add_quiz_master_text, add_question_text
 
 
 
@@ -129,25 +129,7 @@ def check_player_answer():
         return False
         
 
-def add_correct_text(text):
-   
-    with open("gamefiles/correct.txt", "a") as f:
-        f.writelines("<span class='correct'>{}</span>".format(text))
-        
-def add_incorrect_text(text):
-   
-    with open("gamefiles/correct.txt", "a") as f:
-        f.writelines("<span class='incorrect'>{}</span>".format(text))
-        
 
-
-        
-def add_correct_answer_text(correct_answer):
-   
-
-    text_to_write = "The correct answer was: {0}<br>".format(correct_answer)
-    with open("gamefiles/answer.txt", "a") as f:
-        f.writelines(text_to_write)
         
         
 def question_correct(player):
@@ -159,10 +141,7 @@ def question_correct(player):
         return False    
         
         
-def add_quiz_master_text(text):
-    
-    with open("gamefiles/quizmaster.txt", "a") as f:
-        f.writelines("{}<br>".format(text))   
+  
         
         
 def get_correct_answer(player):
@@ -237,6 +216,7 @@ def eliminate_zero_lives_user():
     dump_data(riddle_data)
     return eliminated_user
     
+'''    
 def add_to_leaderboard(player):
    
     username = player["username"]
@@ -253,6 +233,7 @@ def send_leaderboard_data(leaderboard_data):
     with open("data/leaderboardData.json", mode="w", encoding="utf-8") as f:
         json.dump(leaderboard_data, f)
         
+        
 def get_scores():
     
     leaderboard_data = get_leaderboard_data()
@@ -260,12 +241,13 @@ def get_scores():
                          key=lambda k: k["score"])
     return score_data
     
-    
+  
 def get_leaderboard_data():
    
     with open("data/leaderboardData.json", "r") as f:
         leaderboard_data = json.load(f)
         return leaderboard_data
+'''
     
 def all_users_eliminated():
     
@@ -425,11 +407,7 @@ def get_picture_question_list():
     
         
         
-def add_question_text(question):
-    
-    with open("gamefiles/question.txt", "a") as f:
-        f.writelines("{}<br>".format(question))
-        
+
         
 def all_players_eliminated():
    
