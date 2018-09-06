@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <link href="/static/startbootstrap-one-page-wonder-gh-pages/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css" type="text/css" />
 
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
@@ -28,27 +29,6 @@
         </button>
       </div>
     </nav>
-
-    <header class="masthead text-center text-white">
-      <div class="masthead-content">
-        <div class="container">
-          <h1 class="masthead-heading mb-0">Weclome To The Riddle Game</h1>
-          <h2 class="masthead-subheading mb-0">Press The Button Below To Get Started</h2>
-          <a href="{{url_for('setup')}}" class="btn btn-primary btn-xl rounded-pill mt-5">Start</a>
-        </div>
-      </div>
-     
-    </header>
-    
-    <section>
-      
-      <div class="container">
-        
-      </div>
-      
-    </section>
-   
-    
-    
-    
+    {% block content %}{% endblock %}
 </body>
+</html>
