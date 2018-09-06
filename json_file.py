@@ -10,11 +10,17 @@ from gametext import add_eliminated_text, add_correct_text, add_incorrect_text, 
 
 
 def dump_data(player_list):
+    '''
+    will wipe the player.json file, so that it is empty for new game
+    '''
     
     with open("gamefiles/players.json", mode="w", encoding="utf-8") as riddle_data:
         json.dump(player_list, riddle_data)
         
 def get_player_data():
+    '''
+    will return the players usernames in player.json
+    '''
     
     with open("gamefiles/players.json", "r") as json_file:
         json_data = json.load(json_file)
@@ -23,7 +29,10 @@ def get_player_data():
 
 
 def create_riddle_data(number_of_players):
-    
+    '''
+    this creates the game data such as the lives, score, usernames and so on, 
+    this is a key function for the game to work
+    '''
     player_list = []
     for i in range(number_of_players):
         username = request.form["player-{0}-username".format(i + 1)]
@@ -45,6 +54,9 @@ def create_riddle_data(number_of_players):
     
     
 def set_player_turn():
+    '''
+    this dictakes who go it is in the game
+    '''
    
     riddle_data = get_player_data()
     number_of_players = len(riddle_data)
@@ -68,6 +80,11 @@ def set_player_turn():
     dump_data(riddle_data)
     
 def set_previous_answer():
+    """
+    this comes into play after the ppst, it will gets the answer
+    entered into answer form and the player in players.json, 
+    this information is converted into a list of lower case strings
+    """
     
     user_answer = request.form["answer"]
     lower_user_answer = user_answer.lower()
@@ -79,7 +96,11 @@ def set_previous_answer():
     return_player_to_riddle_data(previous_player)
     
 def get_previous_player():
-  
+ 
+    '''
+     returns the data in players.json with a
+     value of True
+    ''' 
     riddle_data = get_player_data()
     previous_player = {}
 
@@ -103,6 +124,11 @@ def return_player_to_riddle_data(player_to_return):
     dump_data(riddle_data)
     
 def check_player_answer():
+    '''
+    this takes the users answer and check against the two keywords i have set,
+    in the question files. if they answer correct they get the you got it correct output,
+    or if they get it wrong it runs the else statement
+    '''
    
     previous_player = get_previous_player()
     answer = previous_player["answer"]
@@ -123,49 +149,24 @@ def check_player_answer():
     else:
         add_incorrect_text("Incorrect")
         previous_player["last question correct"] = False
-        previous_player["incorrect guesses"] = return_incorrect_guesses(
-            previous_player)
         return_player_to_riddle_data(previous_player)
         return False
         
 
 
-        
-        
 def question_correct(player):
    
     if player["last question correct"]:
         return True
 
     else:
-        return False    
+        return False 
         
-        
-  
-        
-        
-def get_correct_answer(player):
-   
-    question_tuple = player["question"]
-    if quiz_question(question_tuple):
-        correct_answer = question_tuple[2]
-    else:
-        correct_answer = question_tuple[1]
-
-    add_correct_answer_text(correct_answer)
-    
-    
-def return_incorrect_guesses(player):
-   
-    incorrect_guesses = player["incorrect guesses"]
-    last_guess = player["answer"]
-
-    last_guess_string = " ".join(str(word) for word in last_guess)
-    new_text = "{0}<br>{1}".format(incorrect_guesses, last_guess_string)
-    return new_text
-    
-    
 def quiz_question(question):
+    """
+    checks if question tuple is a picture
+    question
+    """
    
     if len(question) == 4:
         return True
@@ -173,6 +174,10 @@ def quiz_question(question):
         return False
         
 def set_question_selector(current_score):
+    '''
+    this is a question selector, it will open only a certain question file, 
+    depending on the users score, this makes the game get harder
+    '''
     
     if current_score >= 12:
         return "Hard"
@@ -185,6 +190,9 @@ def set_question_selector(current_score):
     
     
 def adjust_score_and_lives(correct):
+    '''
+    this changes the user score and lives depending on how they answered
+    '''
    
     previous_player = get_previous_player()
 
@@ -197,6 +205,9 @@ def adjust_score_and_lives(correct):
     
     
 def eliminate_zero_lives_user():
+    '''
+    this is the backend code for removing users from the game once they reached zero lives
+    '''
    
     riddle_data = get_player_data()
     player_index = 999
@@ -216,8 +227,11 @@ def eliminate_zero_lives_user():
     dump_data(riddle_data)
     return eliminated_user
     
-'''    
+    
 def add_to_leaderboard(player):
+    '''
+    this takes the players usernames and score and send it to the leaderboard data file so it can be used to create the leaderboard
+    '''
    
     username = player["username"]
     score = player["score"]
@@ -235,6 +249,9 @@ def send_leaderboard_data(leaderboard_data):
         
         
 def get_scores():
+    '''
+    this code will gather the usernames and score and use them to create the leaderboards
+    '''
     
     leaderboard_data = get_leaderboard_data()
     score_data = sorted(leaderboard_data, reverse=True,
@@ -247,20 +264,25 @@ def get_leaderboard_data():
     with open("data/leaderboardData.json", "r") as f:
         leaderboard_data = json.load(f)
         return leaderboard_data
-'''
     
 def all_users_eliminated():
-    
+    '''
+    depending on weather or not the player.json file is empty or not,
+    it will will return false or true
+    '''
     
     riddle_data = get_player_data()
 
-    if len(riddle_data) > 0:
+    if len(riddle_data) >= 0:
         return False
     else:
         return True
         
         
 def start_question():
+    '''
+    this gets the first question from easy.txt and sends it to question_sheet.json
+    '''
     
     question_list = [{"question": "sample_question"}]
 
@@ -268,6 +290,10 @@ def start_question():
         json.dump(question_list, f)
         
 def player_question():
+    '''
+    this sets the question for user but it depends weather or not they got there previous one correct or not,
+    if they did it will display a new one otherwise it will be the same question as before
+    '''
    
     active_user = get_active_user()
 
@@ -279,6 +305,9 @@ def player_question():
     
     
 def random_question_selector(selector):
+    '''
+    this function will select a question at random from my different question lists
+    '''
    
     found_original_question = False
     questions_list = get_questions_answers_keywords(selector)
@@ -297,7 +326,11 @@ def random_question_selector(selector):
     
     
 def get_questions_keywords(selector):
-   
+    '''
+    returns list of tuples in format of (question, answer, keyword)
+    read from questions document. Question document selected by
+    difficulty. Picture questions in format of (link, question, answer, keyword)
+    '''
     if selector == "Picture":
         return get_picture_question_list()
 
@@ -314,6 +347,9 @@ def get_questions_keywords(selector):
     
     
 def get_active_user():
+    '''
+    takes the user is player.json and gives them a value of truye
+    '''
     
     active_user = {}
     riddle_data = get_player_data()
@@ -325,6 +361,9 @@ def get_active_user():
     return active_user
     
 def ask_question():
+    '''
+    will ask the question to the user
+    '''
    
     active_user = get_active_user()
     riddle_data = get_player_data()
@@ -347,6 +386,9 @@ def ask_question():
         
         
 def get_question_sheet():
+    '''
+    opens the question sheet which contains the questions
+    '''
     
     with open("gamefiles/questions_sheet.json", "r") as f:
         questions_sheet = json.load(f)
@@ -354,6 +396,11 @@ def get_question_sheet():
         
         
 def question_check(question_tuple):
+
+    '''
+    returns False if argument is in question_sheet.json,
+    otherwise adds question to questions_sheet.json and returns True
+    '''
    
     questions_sheet = get_question_sheet()
     original_question = True
@@ -370,13 +417,18 @@ def question_check(question_tuple):
         return True
         
 def add_to_questions_sheet(question, questions_sheet):
+    '''
+    adds questions to the question sheet
+    '''
     questions_sheet.append({"question": question[0]})
 
     with open("gamefiles/questions_sheet.json", mode="w", encoding="utf-8") as f:
         json.dump(questions_sheet, f)
         
 def get_questions_answers_keywords(selector):
-   
+    '''
+    checks to see if the users answers matches the set keyword
+    '''
     if selector == "Picture":
         return get_picture_question_list()
 
@@ -393,6 +445,11 @@ def get_questions_answers_keywords(selector):
         
     
 def get_picture_question_list():
+    '''
+    returns a list tuple of picture questions
+    each tuple consists of link, question, answer,
+    keyword
+    '''
    
     with open("data/pictures.txt") as pictures_doc:
         pictures_lines = pictures_doc.read().splitlines()
@@ -409,11 +466,4 @@ def get_picture_question_list():
         
 
         
-def all_players_eliminated():
-   
-    riddle_data = get_player_data()
 
-    if len(riddle_data) >= 0:
-        return False
-    else:
-        return True
