@@ -2,7 +2,10 @@ from random import choice
 
 
 def wipe_gamefiles(game_end=False):
-  
+        """
+        wipes all game text files when
+        game is over.
+        """
         f = open("gamefiles/gameEnd.txt", "r+")
         f.truncate()
         f.close()
@@ -27,11 +30,6 @@ def wipe_gamefiles(game_end=False):
         f = open("gamefiles/question.txt", "r+")
         f.truncate()
         f.close()
-        
-        f = open("gamefiles/question.txt", "r+")
-        f.truncate()
-        f.close()
-        
         
 def game_end_text():
   
