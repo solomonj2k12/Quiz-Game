@@ -100,4 +100,8 @@ six
 
 On the standard Monopoly board, what color are the Chance cards?
 Orange 
+<<<<<<< HEAD
 orange
+=======
+orange
+>>>>>>> 022bf257cc0a0f35053404fc680ba6330a67988a
