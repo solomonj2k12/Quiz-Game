@@ -30,15 +30,6 @@ def add_quiz_master_text(text):
     with open("gamefiles/quizmaster.txt", "a") as f:
         f.writelines("{}<br>".format(text)) 
         
-def add_correct_answer_text(correct_answer):
-    """
-    writes the correct answer to the player's
-    question in answer.txt
-    """
-
-    text_to_write = "The correct answer was: {0}<br>".format(correct_answer)
-    with open("active-game-files/answer.txt", "a") as f:
-        f.writelines(text_to_write)
         
         
 def add_question_text(question):

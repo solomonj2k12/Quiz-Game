@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, redirect, request, url_for
 
 from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives,\
-eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question, get_scores
+eliminate_zero_lives_user, all_users_eliminated, start_question, player_question, ask_question, get_scores
 from gameplay import wipe_gamefiles,  game_end_text, get_end_text
 
 app = Flask(__name__)
@@ -113,7 +113,6 @@ def riddle():
         data = get_scores()
         end_text = get_end_text()
         return render_template('leaderboards.html' ,data=data,
-                                answer_text="".join(end_text["answer text"]),
                                 game_end_text="".join(end_text["game over text"]))
         
     
@@ -125,7 +124,7 @@ def riddle():
     '''
     return render_template("riddle.html", correct_text="".join(end_text["correct text"]),
     eliminated_text="".join(end_text["eliminated text"]),
-    answer_text="".join(end_text["answer text"]), quizmaster_text="".join(end_text["quizmaster text"]),
+    quizmaster_text="".join(end_text["quizmaster text"]),
     question_text="".join(end_text["question text"]),
     riddle_data=riddle_data)
     

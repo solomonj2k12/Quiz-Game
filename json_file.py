@@ -5,7 +5,7 @@ from random import choice
 
 from flask import request
 
-from gametext import add_eliminated_text, add_correct_text, add_incorrect_text,add_quiz_master_text, add_question_text,  add_correct_answer_text
+from gametext import add_eliminated_text, add_correct_text, add_incorrect_text,add_quiz_master_text, add_question_text
 
 
 
@@ -382,14 +382,6 @@ def question_check(question_tuple):
         add_to_questions_sheet(question_tuple, questions_sheet)
         return True
         
-def get_correct_answer(player):
-   
-    question_tuple = player["question"]
-    if quiz_question(question_tuple):
-        correct_answer = question_tuple[2]
-    else:
-        correct_answer = question_tuple[1]
-        add_correct_answer_text(correct_answer)
         
 def add_to_questions_sheet(question, questions_sheet):
     '''
