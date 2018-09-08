@@ -1,14 +1,10 @@
-What is the longest river in the world?
-river nile
-nile
-
 What is the name of C-3PO's partner?
 R2D2
 r2d2
 
-Which fictional city is the home of Batman??
-GothamCity
-gotham
+what super hero belongs to the city of gotham?
+Batman
+batman
 
 In the film Babe, what type of animal was Babe??
 a pig
@@ -50,6 +46,54 @@ How many events are there in a decathlon?
 ten
 10
 
-Who is the author of the `Harry Potter` books?
-JKRowling
-jkrowling
+what is two plus two minus 1?
+three
+3
+
+what is the name of the big green superhero from the marvel universe?
+Hulk
+hulk
+
+what is the name of the comapany which well known for creating films such as Lion King and Aladdin?
+Disney
+disney
+
+what clothing brand is known as the brand with the three stripes?
+Adidas
+adidas
+
+what clothing brand is known to has a tick as their logo?
+Nike
+nike
+
+Name the world's largest ocean. 
+Pacific
+pacific
+
+What is the top layer of Earth called?
+Crust
+crust
+
+what sport involves hitting a puck with a stick?
+Hockey
+hockey
+
+what planet is closest to the sun?
+Mercury
+mercury
+
+what is the name of the company created by Steve Jobs?
+Apple
+apple
+
+what is the name of sponge bobs best friend?
+Patrick
+patrick
+
+what is the name of little green jedi master from the star war films?
+Yoda
+yoda
+
+what is the name of the Australian  throwing tool which will always come back to you?
+Boomerang
+boomerang
