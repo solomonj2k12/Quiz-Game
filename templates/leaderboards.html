@@ -11,24 +11,25 @@
         </div>
       </div>
     
-    <table class="table table-striped">
+   <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">Rank</th>
                 <th scope="col">Username</th>
                 <th scope="col">Score</th>
             </tr>
         </thead>
         <tbody>
-            {% for i in range(30) %}
+        {% for i in range(1) %}
+            {% for d in data %}
             <tr>
-                <th scope="row">{{ i+1 }}</th>
-                <td>{{ leaderboard_data[i]["username"] }}</td>
-                <td>{{ leaderboard_data[i]["score"] }}</td>
+                <td>{{ d.username }}</td>
+                <td>{{ d.score }}</td>
             </tr>
             {% endfor %}
+        {% endfor %}
         </tbody>
     </table>
+
+     
 </main>
-</html>
 {% endblock %}

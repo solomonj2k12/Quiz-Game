@@ -24,8 +24,8 @@ def wipe_gamefiles(game_end=False):
         
         if not game_end:
             f = open("gamefiles/answer.txt", "r+")  
-        f.truncate()
-        f.close()
+            f.truncate()
+            f.close()
         
         f = open("gamefiles/question.txt", "r+")
         f.truncate()

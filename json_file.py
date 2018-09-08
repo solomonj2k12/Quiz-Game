@@ -5,7 +5,7 @@ from random import choice
 
 from flask import request
 
-from gametext import add_eliminated_text, add_correct_text, add_incorrect_text, add_correct_answer_text, add_quiz_master_text, add_question_text
+from gametext import add_eliminated_text, add_correct_text, add_incorrect_text,add_quiz_master_text, add_question_text,  add_correct_answer_text
 
 
 
@@ -154,14 +154,16 @@ def check_player_answer():
         
 
 
+        
+        
 def question_correct(player):
    
     if player["last question correct"]:
         return True
 
     else:
-        return False 
-        
+        return False    
+    
 def quiz_question(question):
     """
     checks if question tuple is a picture
@@ -228,42 +230,7 @@ def eliminate_zero_lives_user():
     return eliminated_user
     
     
-def add_to_leaderboard(player):
-    '''
-    this takes the players usernames and score and send it to the leaderboard data file so it can be used to create the leaderboard
-    '''
-   
-    username = player["username"]
-    score = player["score"]
 
-    saved_score = {"username": username, "score": score}
-    leaderboard_data = get_leaderboard_data()
-    leaderboard_data.append(saved_score)
-
-    send_leaderboard_data(leaderboard_data)
-    
-def send_leaderboard_data(leaderboard_data):
-   
-    with open("data/leaderboardData.json", mode="w", encoding="utf-8") as f:
-        json.dump(leaderboard_data, f)
-        
-        
-def get_scores():
-    '''
-    this code will gather the usernames and score and use them to create the leaderboards
-    '''
-    
-    leaderboard_data = get_leaderboard_data()
-    score_data = sorted(leaderboard_data, reverse=True,
-                         key=lambda k: k["score"])
-    return score_data
-    
-  
-def get_leaderboard_data():
-   
-    with open("data/leaderboardData.json", "r") as f:
-        leaderboard_data = json.load(f)
-        return leaderboard_data
     
 def all_users_eliminated():
     '''
@@ -273,7 +240,7 @@ def all_users_eliminated():
     
     riddle_data = get_player_data()
 
-    if len(riddle_data) >= 0:
+    if len(riddle_data) > 0:
         return False
     else:
         return True
@@ -326,11 +293,11 @@ def random_question_selector(selector):
     
     
 def get_questions_keywords(selector):
-    '''
+    """
     returns list of tuples in format of (question, answer, keyword)
     read from questions document. Question document selected by
     difficulty. Picture questions in format of (link, question, answer, keyword)
-    '''
+    """
     if selector == "Picture":
         return get_picture_question_list()
 
@@ -396,7 +363,6 @@ def get_question_sheet():
         
         
 def question_check(question_tuple):
-
     '''
     returns False if argument is in question_sheet.json,
     otherwise adds question to questions_sheet.json and returns True
@@ -416,10 +382,20 @@ def question_check(question_tuple):
         add_to_questions_sheet(question_tuple, questions_sheet)
         return True
         
+def get_correct_answer(player):
+   
+    question_tuple = player["question"]
+    if quiz_question(question_tuple):
+        correct_answer = question_tuple[2]
+    else:
+        correct_answer = question_tuple[1]
+        add_correct_answer_text(correct_answer)
+        
 def add_to_questions_sheet(question, questions_sheet):
     '''
     adds questions to the question sheet
     '''
+    
     questions_sheet.append({"question": question[0]})
 
     with open("gamefiles/questions_sheet.json", mode="w", encoding="utf-8") as f:
@@ -429,6 +405,7 @@ def get_questions_answers_keywords(selector):
     '''
     checks to see if the users answers matches the set keyword
     '''
+   
     if selector == "Picture":
         return get_picture_question_list()
 
@@ -461,9 +438,44 @@ def get_picture_question_list():
             pictures_lines[i]), pictures_lines[i + 1], pictures_lines[i + 2], pictures_lines[i + 3]))
 
     return pictures_question_list
+
+def add_to_leaderboard(player):
+    '''
+    this takes the players usernames and score and send it to the leaderboard data file so it can be used to create the leaderboard
+    '''
+   
+    username = player["username"]
+    score = player["score"]
+
+    saved_score = {"username": username, "score": score}
+    data = get_leaderboard_data()
+    data.append(saved_score)
+
+    send_leaderboard_data(data)
     
+def send_leaderboard_data(data):
+   
+    with open("data/leaderboardData.json", mode="w", encoding="utf-8") as f:
+        json.dump(data, f)
         
         
+def get_scores():
+    '''
+    this code will gather the usernames and score and use them to create the leaderboards
+    '''
+    
+    data = get_leaderboard_data()
+    score_data = sorted(data, reverse=True,
+                         key=lambda k: k["score"])
+    return score_data
+    
+  
+def get_leaderboard_data():
+   
+    with open("data/leaderboardData.json", "r") as f:
+        data = json.load(f)
+        return data
 
         
 
+        

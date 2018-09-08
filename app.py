@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for
 
-from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives, eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question, all_players_eliminated, get_scores
+from json_file import dump_data, create_riddle_data, get_player_data, set_player_turn, set_previous_answer,  check_player_answer, adjust_score_and_lives,\
+eliminate_zero_lives_user, get_correct_answer, all_users_eliminated, start_question, player_question, ask_question, get_scores
 from gameplay import wipe_gamefiles,  game_end_text, get_end_text
 
 app = Flask(__name__)
@@ -59,8 +60,8 @@ def leaderboards():
     that are collected from the games played,
     this is done by using get_scores
     '''
-    leaderboard_data = get_scores()
-    return render_template("leaderboards.html", leaderboard_data=leaderboard_data)
+    data = get_scores()
+    return render_template("leaderboards.html", data=data)
 
 '''
 quiz game loop
@@ -106,14 +107,14 @@ def riddle():
         '''
         once all players are eliminated they are redirected to the leaderboards where they can see where they are in the table
         '''
-    if all_players_eliminated():
+    if all_users_eliminated():
         wipe_gamefiles(True)
         game_end_text()
-        leaderboard_data = get_scores()
+        data = get_scores()
         end_text = get_end_text()
-        return render_template('leaderboards.html', data=leaderboard_data,
-        answer_text="".join(end_text["answer text"]),
-        game_end_text="".join(end_text["game over text"]))
+        return render_template('leaderboards.html' ,data=data,
+                                answer_text="".join(end_text["answer text"]),
+                                game_end_text="".join(end_text["game over text"]))
         
     
     

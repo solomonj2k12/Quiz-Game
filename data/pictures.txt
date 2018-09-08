@@ -13,12 +13,12 @@ who is this famous music artist?
 Drake
 drake
 
-monster.jpg
-what name of drink brand for this logo?
+monster.png
+what famous energy drink brand belongs to this logo?
 Monster
 monster
 
-newzealand.png
+newzealand.jpg
 what country has this as their flag?
-NewZealand
-newzealand
+New Zealand
+new zealand
