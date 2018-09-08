@@ -33,7 +33,7 @@ what is the name of this famous american rap group?
 Migos
 migos
 
-monopoly.jpg
+Monopoly.png
 what game has this character as their mascot?
 Monopoly
 monopoly
@@ -41,8 +41,4 @@ monopoly
 saturn.jpg
 what is the name of this planet?
 Saturn
-<<<<<<< HEAD
 saturn
-=======
-saturn
->>>>>>> 022bf257cc0a0f35053404fc680ba6330a67988a
