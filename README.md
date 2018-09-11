@@ -62,7 +62,7 @@ Testing:
 2.	Text and colours
 •	They are appropriately sized and colour scheme is readable and colourful
 3.	Post and Get functions
-•	Each function was individually tested before going onto the text one
+•	Each function was individually tested before going onto the next one
 •	For example, when the user picks how many users they wanted, I made sure the correct number of input usernames box appeared before allowing the user to add write their usernames. Next would be to test that the user could input their user names and I followed this same format till I got to the game screen.
 4.	Questions and question box
 •	So first I made sure there was a question answer box in the game screen, next I coded that a question would be outputted, so I could test to see if the question could be answered
