@@ -54,6 +54,8 @@ Technologies Used
 •	Used to store leader board data
 •	Heroku
 •	To host the final version of the game
+link to game:
+https://quiz-game-project-3.herokuapp.com/
 
 Testing:
 1.	Links
