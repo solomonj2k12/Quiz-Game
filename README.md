@@ -98,7 +98,7 @@ Deploying to Heroku:
 4.	After this head on over to your IDE and go to your terminal and type in ‘Heroku login’ and then enter your email and password you just use to create your Heroku account. 
 5.	Once this is done use the ‘heroku apps’ command to check if the app you just made is there.
 6.	Next in the terminal type ‘git remote add heroku (your URL here)’ you can find your project url in the setting on Heroku. After this to ‘git add .’ to add everything in your IDE, then to a git commit and give it a message of your chose, finally ‘git push -u heroku master’
-7.	If your git push failed, it probably because you don’t have a requirements.txt file. To add one, in the terminal type ‘sudo pip3 freeze –local > requirements.txt’ this will create the file and now Heroku will now know what file it needs to install to run the project. Now commit and push the change to Heroku to get your project to work
+7.	If your git push failed, it probably because you don’t have a requirements.txt file. To add one, in the terminal type ‘sudo pip3 freeze --local > requirements.txt ’ this will create the file and now Heroku will now know what file it needs to install to run the project. Now commit and push the change to Heroku to get your project to work
 8.	Finally, to run your project we need to create a profile. Head on over to the terminal and type ‘echo web: python app.py > procfile’ yours might be run.py instead of app.py. now git commit and git push this procfile to Heroku.  To avoid any more errors in the terminal enter ‘heroku ps:scale web=1’.
 9.	Now head onto Heroku and go to setting and click on reveal config vars, now enter these configurations IP 0.0.0.0 and PORT 5000
 10.	Your project is now fully deployed.
